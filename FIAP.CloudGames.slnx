@@ -1,0 +1,11 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="FIAP.CloudGames.API/FIAP.CloudGames.API.csproj" />
+    <Project Path="FIAP.CloudGames.Application/FIAP.CloudGames.Application.csproj" />
+    <Project Path="FIAP.CloudGames.Domain/FIAP.CloudGames.Domain.csproj" />
+    <Project Path="FIAP.CloudGames.Infrastructure/FIAP.CloudGames.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="FIAP.CloudGames.Tests/FIAP.CloudGames.Tests.csproj" />
+  </Folder>
+</Solution>

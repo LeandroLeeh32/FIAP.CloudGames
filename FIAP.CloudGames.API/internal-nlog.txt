@@ -1,0 +1,51 @@
+2025-12-15 21:57:10.5184 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-12-15 21:57:10.5251 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-12-15 21:57:10.5251 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.7.4784. Product version: 6.0.7+4dd16e8d54b0f5510479cbe00ba28b77501b7901. GlobalAssemblyCache: False
+2025-12-15 21:57:10.5466 Info Configuration initialized: TargetNames=file, console, ConfigItems=27, AutoReload=true, FilePath=C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+2025-12-15 21:59:30.0736 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-12-15 21:59:30.0866 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-12-15 21:59:30.0866 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.7.4784. Product version: 6.0.7+4dd16e8d54b0f5510479cbe00ba28b77501b7901. GlobalAssemblyCache: False
+2025-12-15 21:59:30.1342 Info Configuration initialized: TargetNames=file, console, ConfigItems=27, AutoReload=true, FilePath=C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+2025-12-15 22:03:11.1364 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-12-15 22:03:11.1507 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-12-15 22:03:11.1641 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.7.4784. Product version: 6.0.7+4dd16e8d54b0f5510479cbe00ba28b77501b7901. GlobalAssemblyCache: False
+2025-12-15 22:03:11.2026 Info Configuration initialized: TargetNames=file, console, ConfigItems=27, AutoReload=true, FilePath=C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+2025-12-15 22:03:39.3335 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-12-15 22:03:39.3491 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-12-15 22:03:39.3491 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.7.4784. Product version: 6.0.7+4dd16e8d54b0f5510479cbe00ba28b77501b7901. GlobalAssemblyCache: False
+2025-12-15 22:03:39.3909 Info Configuration initialized: TargetNames=file, console, ConfigItems=27, AutoReload=true, FilePath=C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+2025-12-15 22:04:45.5048 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-12-15 22:04:45.5193 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-12-15 22:04:45.5278 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.7.4784. Product version: 6.0.7+4dd16e8d54b0f5510479cbe00ba28b77501b7901. GlobalAssemblyCache: False
+2025-12-15 22:04:45.5706 Info Configuration initialized: TargetNames=file, console, ConfigItems=27, AutoReload=true, FilePath=C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+2025-12-15 22:09:21.5451 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-12-15 22:09:21.5594 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-12-15 22:09:21.5594 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.7.4784. Product version: 6.0.7+4dd16e8d54b0f5510479cbe00ba28b77501b7901. GlobalAssemblyCache: False
+2025-12-15 22:09:21.6095 Info Configuration initialized: TargetNames=file, console, ConfigItems=27, AutoReload=true, FilePath=C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+2025-12-15 22:10:12.5619 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-12-15 22:10:12.5746 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-12-15 22:10:12.5829 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.7.4784. Product version: 6.0.7+4dd16e8d54b0f5510479cbe00ba28b77501b7901. GlobalAssemblyCache: False
+2025-12-15 22:10:12.6203 Info Configuration initialized: TargetNames=file, console, ConfigItems=27, AutoReload=true, FilePath=C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+2025-12-15 22:11:03.8674 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-12-15 22:11:03.8849 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-12-15 22:11:03.8961 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.7.4784. Product version: 6.0.7+4dd16e8d54b0f5510479cbe00ba28b77501b7901. GlobalAssemblyCache: False
+2025-12-15 22:11:03.9501 Info Configuration initialized: TargetNames=file, console, ConfigItems=27, AutoReload=true, FilePath=C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+2025-12-15 22:12:13.3949 Info Registered target NLog.Targets.FileTarget(Name=file)
+2025-12-15 22:12:13.4114 Info Registered target NLog.Targets.ConsoleTarget(Name=console)
+2025-12-15 22:12:13.4213 Info NLog, Version=6.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c. File version: 6.0.7.4784. Product version: 6.0.7+4dd16e8d54b0f5510479cbe00ba28b77501b7901. GlobalAssemblyCache: False
+2025-12-15 22:12:13.4703 Info Configuration initialized: TargetNames=file, console, ConfigItems=27, AutoReload=true, FilePath=C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+2025-12-15 22:13:46.0867 Info AutoReload Config File Monitor reloading configuration...
+2025-12-15 22:13:46.1023 Error Failed loading NLog configuration. Invalid XML document. Cannot parse attribute-name with character: < - Cannot parse attributes for Start-tag: nlog - Line: 9  FilePath: C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config Exception: NLog.NLogConfigurationException: Failed loading NLog configuration. Invalid XML document. Cannot parse attribute-name with character: < - Cannot parse attributes for Start-tag: nlog - Line: 9  FilePath: C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+ ---> NLog.Config.XmlParserException: Invalid XML document. Cannot parse attribute-name with character: < - Cannot parse attributes for Start-tag: nlog - Line: 9
+   at NLog.Internal.XmlParser.LoadDocument(IList`1& processingInstructions)
+   at NLog.Config.XmlLoggingConfiguration.ParseFromTextReader(TextReader textReader, String filePath)
+   --- End of inner exception stack trace ---
+2025-12-15 22:13:46.1590 Warn AutoReload Config File Monitor failed to reload NLog LoggingConfiguration. Exception: NLog.NLogConfigurationException: Failed loading NLog configuration. Invalid XML document. Cannot parse attribute-name with character: < - Cannot parse attributes for Start-tag: nlog - Line: 9  FilePath: C:\Estudo-Pos\FIAP.CloudGames\FIAP.CloudGames.API\nlog.config
+ ---> NLog.Config.XmlParserException: Invalid XML document. Cannot parse attribute-name with character: < - Cannot parse attributes for Start-tag: nlog - Line: 9
+   at NLog.Internal.XmlParser.LoadDocument(IList`1& processingInstructions)
+   at NLog.Config.XmlLoggingConfiguration.ParseFromTextReader(TextReader textReader, String filePath)
+   --- End of inner exception stack trace ---
+   at NLog.Config.XmlLoggingConfiguration.ParseFromTextReader(TextReader textReader, String filePath)
+   at NLog.Config.XmlLoggingConfiguration.LoadFromXmlFile(String filePath)
+   at NLog.Config.XmlLoggingConfiguration.Reload()
+   at NLog.Config.XmlLoggingConfiguration.AutoReloadConfigFileWatcher.ReloadTimer(Object state)
