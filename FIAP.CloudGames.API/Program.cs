@@ -1,3 +1,4 @@
+using FIAP.CloudGames.Application.UseCases.ProcessGame;
 using NLog.Web;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +6,9 @@ var builder = WebApplication.CreateBuilder(args);
 // ?? Conecta NLog ao pipeline de logging
 builder.Logging.ClearProviders();
 builder.Host.UseNLog();
+
+// ?? Dependency Injection
+builder.Services.AddScoped<IProcessGameUseCase, ProcessGameUseCase>();
 
 // ?? Services
 builder.Services.AddControllers();
