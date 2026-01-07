@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using FIAP.CloudGames.Domain.Entities;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace FIAP.CloudGames.Application.UseCases.ProcessGame
-    
+
 {
 
     public class ProcessGameUseCase : IProcessGameUseCase
@@ -21,11 +22,23 @@ namespace FIAP.CloudGames.Application.UseCases.ProcessGame
 
         public Task<ProcessGameResponse> ExecuteAsync(ProcessGameRequest request)
         {
-            _logger.LogInformation("Iniciando processamento do jogo. Nome: {GameName}",request.GameName);
+            _logger.LogInformation("Iniciando processamento do jogo. Nome: {GameName}", request.GameName);
 
-            if (string.IsNullOrWhiteSpace(request.GameName))
+            try
             {
-                _logger.LogWarning("Nome do jogo não informado.");
+                var game = new Game(request.GameName);
+                _logger.LogInformation("Processamento do jogo {GameName} realizado com sucesso.", game.Name);
+
+                return Task.FromResult(new ProcessGameResponse
+                {
+                    Success = true,
+                    Message = $"Jogo '{game.Name}' processado com sucesso."
+                });
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning("Falha ao processar o jogo por nome inválido.");
 
                 return Task.FromResult(new ProcessGameResponse
                 {
@@ -33,18 +46,6 @@ namespace FIAP.CloudGames.Application.UseCases.ProcessGame
                     Message = "Nome do jogo é obrigatório."
                 });
             }
-
-            _logger.LogInformation(
-                "Processamento do jogo {GameName} realizado com sucesso.",
-                request.GameName
-            );
-
-            return Task.FromResult(new ProcessGameResponse
-            {
-                Success = true,
-                Message = $"Jogo '{request.GameName}' processado com sucesso."
-            });
-
         }
     }
 }
