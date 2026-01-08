@@ -1,9 +1,12 @@
 ﻿using FIAP.CloudGames.Application.UseCases.ProcessGame;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FIAP.CloudGames.API.Controllers
 {
     [ApiController]
+    [Authorize]
+
     [Route("api/[controller]")]
     public class GamesController : ControllerBase
     {
@@ -15,6 +18,7 @@ namespace FIAP.CloudGames.API.Controllers
             _processGame = processGame;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("ProcessGame")]
         public async Task<IActionResult> ProcessGame([FromBody] ProcessGameRequest request)
         {
