@@ -8,13 +8,13 @@ using Xunit;
 
 public class LoginUserUseCaseTests
 {
-    private readonly Mock<IAuthService> _tokenServiceMock;
+    private readonly Mock<ITokenService> _tokenServiceMock;
     private readonly Mock<ILogger<LoginUserUseCase>> _loggerMock;
     private readonly LoginUserUseCase _useCase;
 
     public LoginUserUseCaseTests()
     {
-        _tokenServiceMock = new Mock<IAuthService>();
+        _tokenServiceMock = new Mock<ITokenService>();
         _loggerMock = new Mock<ILogger<LoginUserUseCase>>();
 
         _tokenServiceMock

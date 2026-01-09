@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -31,6 +32,13 @@ public static class JwtConfiguration
                 {
                     OnChallenge = context =>
                     {
+                        var logger = context.HttpContext
+                            .RequestServices
+                            .GetRequiredService<ILoggerFactory>()
+                            .CreateLogger("FIAP.CloudGames.API.Auth");
+
+                        logger.LogWarning("[API][Auth] Usuário não autenticado ao acessar {Caminho}",context.HttpContext.Request.Path);
+
                         context.HandleResponse();
                         context.Response.StatusCode = StatusCodes.Status401Unauthorized;
                         context.Response.ContentType = "application/json";
@@ -43,6 +51,13 @@ public static class JwtConfiguration
 
                     OnForbidden = context =>
                     {
+                        var logger = context.HttpContext
+                            .RequestServices
+                            .GetRequiredService<ILoggerFactory>()
+                            .CreateLogger("Auth");
+
+                        logger.LogWarning("[API][Auth] Usuário autenticado sem permissão para acessar {Caminho}",context.HttpContext.Request.Path);
+
                         context.Response.StatusCode = StatusCodes.Status403Forbidden;
                         context.Response.ContentType = "application/json";
 
@@ -52,6 +67,7 @@ public static class JwtConfiguration
                         });
                     }
                 };
+
             });
 
         services.AddAuthorization();

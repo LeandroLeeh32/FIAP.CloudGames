@@ -28,7 +28,6 @@
   <ItemGroup>
     <Folder Include="Controllers\DTOs\Responses\" />
     <Folder Include="Controllers\DTOs\Requests\" />
-    <Folder Include="Middlewares\" />
     <Folder Include="Config\" />
     <Folder Include="logs\" />
   </ItemGroup>

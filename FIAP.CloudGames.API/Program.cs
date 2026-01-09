@@ -5,6 +5,8 @@ using FIAP.CloudGames.Infrastructure.Security;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 using System.Text;
+using FIAP.CloudGames.API.Middlewares;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // 🔹 Conecta NLog ao pipeline de logging
@@ -17,7 +19,7 @@ builder.Services.AddScoped<IProcessGameUseCase, ProcessGameUseCase>();
 builder.Services.AddScoped<LoginUserUseCase>();
 
 // 🔹 Dependency Injection (Infrastructure)
-builder.Services.AddScoped<IAuthService, JwtTokenService>();
+builder.Services.AddScoped<ITokenService, JwtTokenService>();
 
 // 🔹 Controllers & Swagger
 builder.Services.AddControllers();
@@ -58,6 +60,9 @@ builder.Services.AddJwtAuthentication(
 builder.Services.AddAuthorization();
 
 var app = builder.Build();
+
+// Middleware de logging
+app.UseMiddleware<RequestLoggingMiddleware>();
 
 // ?? Middleware
 if (app.Environment.IsDevelopment())

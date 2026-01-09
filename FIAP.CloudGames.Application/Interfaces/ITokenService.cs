@@ -2,7 +2,7 @@
 
 namespace FIAP.CloudGames.Application.Interfaces
 {
-    public interface IAuthService
+    public interface ITokenService
     {
         string GenerateToken(User user);
     }
