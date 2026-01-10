@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FIAP.CloudGames.Domain\FIAP.CloudGames.Domain.csproj" />
-    <ProjectReference Include="..\FIAP.CloudGames.Infrastructure\FIAP.CloudGames.Infrastructure.csproj" />
   </ItemGroup>
 
   <ItemGroup>

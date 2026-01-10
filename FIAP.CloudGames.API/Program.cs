@@ -1,6 +1,7 @@
+using FIAP.CloudGames.Application.Repositories;
 using FIAP.CloudGames.Application.UseCases.Games;
-using FIAP.CloudGames.Application.UseCases.ProcessGame;
 using FIAP.CloudGames.Infrastructure.Persistence;
+using FIAP.CloudGames.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 
@@ -11,8 +12,12 @@ builder.Logging.ClearProviders();
 builder.Host.UseNLog();
 
 // ?? Dependency Injection
-builder.Services.AddScoped<IProcessGameUseCase, ProcessGameUseCase>();
-builder.Services.AddScoped<IGamesUseCase, GamesUseCase>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IGetGamesUseCase, GetGamesUseCase>();
+builder.Services.AddScoped<IGetGameByIdUseCase, GetGameByIdUseCase>();
+builder.Services.AddScoped<ICreateGameUseCase, CreateGameUseCase>();
+builder.Services.AddScoped<IUpdateGameUseCase, UpdateGameUseCase>();
+builder.Services.AddScoped<IDeleteGameUseCase, DeleteGameUseCase>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
