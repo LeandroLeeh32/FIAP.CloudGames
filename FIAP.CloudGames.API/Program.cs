@@ -1,8 +1,11 @@
 ﻿using FIAP.CloudGames.Application.UseCases.Authentication;
+using FIAP.CloudGames.Application.UseCases.Games;
 using FIAP.CloudGames.Application.UseCases.ProcessGame;
 using FIAP.CloudGames.Application.Interfaces;
 using FIAP.CloudGames.Infrastructure.Security;
 using Microsoft.IdentityModel.Tokens;
+using FIAP.CloudGames.Infrastructure.Persistence;
+using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using System.Text;
 using FIAP.CloudGames.API.Middlewares;
@@ -17,6 +20,14 @@ builder.Host.UseNLog();
 // 🔹 Dependency Injection (Application)
 builder.Services.AddScoped<IProcessGameUseCase, ProcessGameUseCase>();
 builder.Services.AddScoped<LoginUserUseCase>();
+builder.Services.AddScoped<IGamesUseCase, GamesUseCase>();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
+    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+    options.UseSqlite(connectionString));
+
 
 // 🔹 Dependency Injection (Infrastructure)
 builder.Services.AddScoped<ITokenService, JwtTokenService>();

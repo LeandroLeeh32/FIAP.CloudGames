@@ -8,16 +8,12 @@ namespace FIAP.CloudGames.Domain.Entities
 {
     public class Game
     {
-        public string Name { get; }
+        public Guid Id { get; set; }
+        public string Title { get; set; } = string.Empty;
+        public string? Description { get; set; }
+        public decimal Price { get; set; }
 
-        public Game(string name)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentNullException("Nome do jogo é obrigatío", nameof(name)); 
-
-            Name = name;
-            
-        }
-
+        public ICollection<UserGame> UserGames { get; set; } = new List<UserGame>();
+        public ICollection<PromotionGame> PromotionGames { get; set; } = new List<PromotionGame>();
     }
 }
