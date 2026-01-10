@@ -1,4 +1,4 @@
-﻿using FIAP.CloudGames.API.Contracts.Users;
+﻿using FIAP.CloudGames.API.Controllers.DTOs.Requests.Users;
 using FIAP.CloudGames.Application.UseCases.User;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

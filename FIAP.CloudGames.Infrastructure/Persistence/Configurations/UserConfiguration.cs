@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace FIAP.CloudGames.Infrastructure.Persistence.Configurations
 {
-    public class UserConfiguration : IEntityTypeConfiguration<Users>
+    public class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<Users> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.ToTable("Users");
 

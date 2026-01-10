@@ -12,17 +12,30 @@ namespace FIAP.CloudGames.API.Controllers
     [Route("api/[controller]")]
     public class GamesController : ControllerBase
     {
-        private readonly IGamesUseCase _gamesUseCase;
+        private readonly GetGamesUseCase _getGamesUseCase;
+        private readonly GetGameByIdUseCase _getGameByIdUseCase;
+        private readonly CreateGameUseCase _createGameUseCase;
+        private readonly UpdateGameUseCase _updateGameUseCase;
+        private readonly DeleteGameUseCase _deleteGameUseCase;
 
-        public GamesController(IGamesUseCase gamesUseCase)
+        public GamesController(
+            GetGamesUseCase getGamesUseCase,
+            GetGameByIdUseCase getGameByIdUseCase,
+            CreateGameUseCase createGameUseCase,
+            UpdateGameUseCase updateGameUseCase,
+            DeleteGameUseCase deleteGameUseCase)
         {
-            _gamesUseCase = gamesUseCase;
+            _getGamesUseCase = getGamesUseCase;
+            _getGameByIdUseCase = getGameByIdUseCase;
+            _createGameUseCase = createGameUseCase;
+            _updateGameUseCase = updateGameUseCase;
+            _deleteGameUseCase = deleteGameUseCase;
         }
 
         [HttpGet]
         public async Task<ActionResult<IReadOnlyList<GameResponse>>> GetAll()
         {
-            var games = await _gamesUseCase.GetAllAsync();
+            var games = await _getGamesUseCase.ExecuteAsync();
             var response = games.Select(MapToResponse).ToList();
 
             return Ok(response);
@@ -31,7 +44,7 @@ namespace FIAP.CloudGames.API.Controllers
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<GameResponse>> GetById(Guid id)
         {
-            var game = await _gamesUseCase.GetByIdAsync(id);
+            var game = await _getGameByIdUseCase.ExecuteAsync(id);
             if (game is null)
             {
                 return NotFound();
@@ -43,7 +56,7 @@ namespace FIAP.CloudGames.API.Controllers
         [HttpPost]
         public async Task<ActionResult<GameResponse>> Create([FromBody] CreateGameRequest request)
         {
-            var result = await _gamesUseCase.CreateAsync(new CreateGameInput
+            var result = await _createGameUseCase.ExecuteAsync(new CreateGameInput
             {
                 Title = request.Title,
                 Description = request.Description,
@@ -52,7 +65,7 @@ namespace FIAP.CloudGames.API.Controllers
 
             if (!result.Success)
             {
-                 return BadRequest(result.Message);
+                //log error
             }
 
             var response = MapToResponse(result.Data!);
@@ -62,7 +75,7 @@ namespace FIAP.CloudGames.API.Controllers
         [HttpPut("{id:guid}")]
         public async Task<ActionResult<GameResponse>> Update(Guid id, [FromBody] UpdateGameRequest request)
         {
-            var result = await _gamesUseCase.UpdateAsync(id, new UpdateGameInput
+            var result = await _updateGameUseCase.ExecuteAsync(id, new UpdateGameInput
             {
                 Title = request.Title,
                 Description = request.Description,
@@ -71,7 +84,7 @@ namespace FIAP.CloudGames.API.Controllers
 
             if (!result.Success)
             {
-                return BadRequest(result.Message);
+                //log error
             }
 
             return Ok(MapToResponse(result.Data!));
@@ -80,10 +93,10 @@ namespace FIAP.CloudGames.API.Controllers
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {
-            var result = await _gamesUseCase.DeleteAsync(id);
+            var result = await _deleteGameUseCase.ExecuteAsync(id);
             if (!result.Success)
             {
-                return BadRequest(result.Message);
+                //log error
             }
 
             return NoContent();

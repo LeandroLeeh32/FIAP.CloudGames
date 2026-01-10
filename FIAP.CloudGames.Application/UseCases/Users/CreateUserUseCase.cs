@@ -1,4 +1,4 @@
-﻿using FIAP.CloudGames.Application.Interfaces;
+﻿using FIAP.CloudGames.Application.Interfaces.Repositories;
 using FIAP.CloudGames.Domain.Entities;
 using FIAP.CloudGames.Domain.Enums;
 using Microsoft.Extensions.Logging;
@@ -21,7 +21,7 @@ namespace FIAP.CloudGames.Application.UseCases.User
                 "[App][CreateUserUseCase] Criando usuário com perfil {Perfil}",
                 role);
 
-            var user = new Users(name, email, role);
+            var user = new Domain.Entities.User(name, email, role);
             _repository.Add(user);
 
             return user.Id;

@@ -1,10 +1,10 @@
-﻿using FIAP.CloudGames.Application.Interfaces;
-using FIAP.CloudGames.Application.UseCases.Authentication;
+﻿using FIAP.CloudGames.Application.UseCases.Authentication;
 using FIAP.CloudGames.Domain.Enums;
 using Microsoft.Extensions.Logging;
 using FIAP.CloudGames.Domain.Entities;
 using Moq;
 using Xunit;
+using FIAP.CloudGames.Application.Interfaces.Services;
 
 public class LoginUserUseCaseTests
 {
@@ -18,7 +18,7 @@ public class LoginUserUseCaseTests
         _loggerMock = new Mock<ILogger<LoginUserUseCase>>();
 
         _tokenServiceMock
-          .Setup(x => x.GenerateToken(It.IsAny<Users>()))
+          .Setup(x => x.GenerateToken(It.IsAny<User>()))
           .Returns("fake-jwt-token");
 
         _useCase = new LoginUserUseCase(
@@ -39,7 +39,7 @@ public class LoginUserUseCaseTests
         Assert.Equal("fake-jwt-token", token);
 
         _tokenServiceMock.Verify(x =>
-           x.GenerateToken(It.Is<Users>(
+           x.GenerateToken(It.Is<User>(
                u => u.Role == UserRole.Admin)),
            Times.Once);
 
@@ -58,7 +58,7 @@ public class LoginUserUseCaseTests
         Assert.Equal("fake-jwt-token", token);
 
         _tokenServiceMock.Verify(x =>
-            x.GenerateToken(It.Is<Users>(
+            x.GenerateToken(It.Is<User>(
                 u => u.Role == UserRole.User)),
             Times.Once);
 

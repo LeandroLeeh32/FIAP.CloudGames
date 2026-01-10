@@ -1,37 +1,21 @@
 
-﻿using FIAP.CloudGames.API.Middlewares;
-﻿using FIAP.CloudGames.Application.UseCases.Authentication;
-using FIAP.CloudGames.Application.UseCases.Games;
-using FIAP.CloudGames.Application.UseCases.ProcessGame;
-using FIAP.CloudGames.Application.Interfaces;
+using FIAP.CloudGames.API.Middlewares;
+using FIAP.CloudGames.Application.Interfaces.Repositories;
+using FIAP.CloudGames.Application.Interfaces.Services;
+using FIAP.CloudGames.Application.Repositories;
 using FIAP.CloudGames.Application.UseCases.Authentication;
-using FIAP.CloudGames.Application.UseCases.ProcessGame;
+using FIAP.CloudGames.Application.UseCases.Games;
 using FIAP.CloudGames.Application.UseCases.User;
+using FIAP.CloudGames.Infrastructure.Persistence;
 using FIAP.CloudGames.Infrastructure.Repositories;
 using FIAP.CloudGames.Infrastructure.Security;
-using Microsoft.IdentityModel.Tokens;
-using FIAP.CloudGames.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// 🔹 Conecta NLog ao pipeline de logging
-// 🔹 Logging (NLog)
 builder.Logging.ClearProviders();
 builder.Host.UseNLog();
-
-// 🔹 Dependency Injection (Application)
-builder.Services.AddScoped<IProcessGameUseCase, ProcessGameUseCase>();
-builder.Services.AddScoped<LoginUserUseCase>();
-
-builder.Services.AddScoped<CreateUserUseCase>();
-builder.Services.AddScoped<GetUsersUseCase>();
-builder.Services.AddScoped<UpdateUserUseCase>();
-builder.Services.AddScoped<DeleteUserUseCase>();
-
-builder.Services.AddScoped<IGamesUseCase, GamesUseCase>();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -39,10 +23,22 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(connectionString));
 
+// UseCases
+builder.Services.AddScoped<LoginUserUseCase>();
+builder.Services.AddScoped<CreateUserUseCase>();
+builder.Services.AddScoped<GetUsersUseCase>();
+builder.Services.AddScoped<UpdateUserUseCase>();
+builder.Services.AddScoped<DeleteUserUseCase>();
+builder.Services.AddScoped<GetGamesUseCase>();
+builder.Services.AddScoped<GetGameByIdUseCase>();
+builder.Services.AddScoped<CreateGameUseCase>();
+builder.Services.AddScoped<UpdateGameUseCase>();
+builder.Services.AddScoped<DeleteGameUseCase>();
 
 // 🔹 Dependency Injection (Infrastructure)
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
-builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
+builder.Services.AddScoped<IGameRepository, GameRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // 🔹 Controllers & Swagger
 builder.Services.AddControllers();
@@ -84,10 +80,9 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Middleware de logging
+// Middleware
 app.UseMiddleware<RequestLoggingMiddleware>();
 
-// ?? Middleware
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

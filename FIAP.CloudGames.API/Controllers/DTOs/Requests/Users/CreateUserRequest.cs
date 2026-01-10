@@ -1,6 +1,6 @@
 ﻿using FIAP.CloudGames.Domain.Enums;
 
-namespace FIAP.CloudGames.API.Contracts.Users
+namespace FIAP.CloudGames.API.Controllers.DTOs.Requests.Users
 {
     public class CreateUserRequest
     {

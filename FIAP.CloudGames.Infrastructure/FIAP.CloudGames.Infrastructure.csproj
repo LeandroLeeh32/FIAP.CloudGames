@@ -14,13 +14,14 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="8.15.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.15.0" />
+    <ProjectReference Include="..\FIAP.CloudGames.Application\FIAP.CloudGames.Application.csproj" />
+    <ProjectReference Include="..\FIAP.CloudGames.Domain\FIAP.CloudGames.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\FIAP.CloudGames.Application\FIAP.CloudGames.Application.csproj" />
     <ProjectReference Include="..\FIAP.CloudGames.Domain\FIAP.CloudGames.Domain.csproj" />
     <Folder Include="Security\" />
-    <Folder Include="Repositories\" />
     <Folder Include="Persistence\Configurations\" />
   </ItemGroup>
 

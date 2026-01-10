@@ -1,18 +1,13 @@
-﻿using FIAP.CloudGames.Application.Interfaces;
+﻿using FIAP.CloudGames.Application.Interfaces.Repositories;
 using FIAP.CloudGames.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FIAP.CloudGames.Infrastructure.Repositories
 {
-    public class InMemoryUserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
-        private static readonly List<Users> _users = new();
+        private static readonly List<User> _users = new();
 
-        public void Add(Users user)
+        public void Add(User user)
         {
             _users.Add(user);
         }
@@ -22,17 +17,17 @@ namespace FIAP.CloudGames.Infrastructure.Repositories
             _users.RemoveAll(u => u.Id == id);
         }
 
-        public IEnumerable<Users> GetAll()
+        public IEnumerable<User> GetAll()
         {
             return _users;
         }
 
-        public Users? GetById(Guid id)
+        public User? GetById(Guid id)
         {
             return _users.FirstOrDefault(u => u.Id == id);
         }
 
-        public void Update(Users user)
+        public void Update(User user)
         {
             // In-memory: o objeto já está atualizado
         }

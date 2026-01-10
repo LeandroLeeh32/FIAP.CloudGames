@@ -1,4 +1,4 @@
-﻿using FIAP.CloudGames.Application.Interfaces;
+﻿using FIAP.CloudGames.Application.Interfaces.Repositories;
 using Microsoft.Extensions.Logging;
 
 namespace FIAP.CloudGames.Application.UseCases.User;

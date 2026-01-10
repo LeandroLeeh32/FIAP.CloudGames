@@ -10,7 +10,7 @@ namespace FIAP.CloudGames.Infrastructure.Persistence
         {
         }
 
-        public DbSet<Users> Users => Set<Users>();
+        public DbSet<User> Users => Set<User>();
         public DbSet<Game> Games => Set<Game>();
         public DbSet<UserGame> UserGames => Set<UserGame>();
         public DbSet<Promotion> Promotions => Set<Promotion>();

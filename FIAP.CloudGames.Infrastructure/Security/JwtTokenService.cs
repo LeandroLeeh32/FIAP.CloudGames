@@ -1,4 +1,4 @@
-﻿using FIAP.CloudGames.Application.Interfaces;
+﻿using FIAP.CloudGames.Application.Interfaces.Services;
 using FIAP.CloudGames.Domain.Entities;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
@@ -21,7 +21,7 @@ public class JwtTokenService : ITokenService
         _logger = logger;
     }
 
-    public string GenerateToken(Users user)
+    public string GenerateToken(User user)
     {
         _logger.LogInformation("[Infra][JwtTokenService] Iniciando geração de token JWT para UsuárioId={UsuarioId} Perfil={Perfil}", user.Id, user.Role);
         try
@@ -51,7 +51,7 @@ public class JwtTokenService : ITokenService
         catch (Exception ex)
         {
             _logger.LogError( ex, "[Infra][JwtTokenService] Erro ao gerar token JWT para UsuárioId={UsuarioId}",user.Id);
-            throw; // middleware ira tratar
+            throw; 
           
         }
        

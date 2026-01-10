@@ -1,4 +1,4 @@
-﻿using FIAP.CloudGames.Application.Interfaces;
+﻿using FIAP.CloudGames.Application.Interfaces.Repositories;
 using FIAP.CloudGames.Domain.Entities;
 
 namespace FIAP.CloudGames.Application.UseCases.User;
@@ -11,6 +11,6 @@ public class GetUsersUseCase
         _repository = repository;
     }
 
-    public IEnumerable<Users> Execute()
+    public IEnumerable<Domain.Entities.User> Execute()
         => _repository.GetAll();
 }

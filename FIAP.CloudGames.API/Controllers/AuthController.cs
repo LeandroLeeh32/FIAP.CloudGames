@@ -1,5 +1,4 @@
 ﻿using FIAP.CloudGames.Application.UseCases.Authentication;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FIAP.CloudGames.API.Controllers

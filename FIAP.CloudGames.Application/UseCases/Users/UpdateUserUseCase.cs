@@ -1,4 +1,4 @@
-﻿using FIAP.CloudGames.Application.Interfaces;
+﻿using FIAP.CloudGames.Application.Interfaces.Repositories;
 using FIAP.CloudGames.Domain.Enums;
 using Microsoft.Extensions.Logging;
 

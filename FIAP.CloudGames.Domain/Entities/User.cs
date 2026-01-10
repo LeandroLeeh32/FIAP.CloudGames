@@ -2,7 +2,7 @@
 
 namespace FIAP.CloudGames.Domain.Entities
 {
-    public class Users
+    public class User
     {
         public Guid Id { get; set; }
         public string Name { get; set; } = string.Empty;
@@ -12,7 +12,7 @@ namespace FIAP.CloudGames.Domain.Entities
 
 
         // MOCK: senha não persistida ainda
-        public Users(string name, string email, UserRole role)
+        public User(string name, string email, UserRole role)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException("Nome inválido");
