@@ -1,11 +1,13 @@
-﻿using FIAP.CloudGames.Application.UseCases.Authentication;
-using FIAP.CloudGames.Application.UseCases.ProcessGame;
+﻿using FIAP.CloudGames.API.Middlewares;
 using FIAP.CloudGames.Application.Interfaces;
+using FIAP.CloudGames.Application.UseCases.Authentication;
+using FIAP.CloudGames.Application.UseCases.ProcessGame;
+using FIAP.CloudGames.Application.UseCases.User;
+using FIAP.CloudGames.Infrastructure.Repositories;
 using FIAP.CloudGames.Infrastructure.Security;
 using Microsoft.IdentityModel.Tokens;
 using NLog.Web;
 using System.Text;
-using FIAP.CloudGames.API.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,9 +19,14 @@ builder.Host.UseNLog();
 // 🔹 Dependency Injection (Application)
 builder.Services.AddScoped<IProcessGameUseCase, ProcessGameUseCase>();
 builder.Services.AddScoped<LoginUserUseCase>();
+builder.Services.AddScoped<CreateUserUseCase>();
+builder.Services.AddScoped<GetUsersUseCase>();
+builder.Services.AddScoped<UpdateUserUseCase>();
+builder.Services.AddScoped<DeleteUserUseCase>();
 
 // 🔹 Dependency Injection (Infrastructure)
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
+builder.Services.AddSingleton<IUserRepository, InMemoryUserRepository>();
 
 // 🔹 Controllers & Swagger
 builder.Services.AddControllers();

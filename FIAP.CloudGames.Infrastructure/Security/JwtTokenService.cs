@@ -21,7 +21,7 @@ public class JwtTokenService : ITokenService
         _logger = logger;
     }
 
-    public string GenerateToken(User user)
+    public string GenerateToken(Users user)
     {
         _logger.LogInformation("[Infra][JwtTokenService] Iniciando geração de token JWT para UsuárioId={UsuarioId} Perfil={Perfil}", user.Id, user.Role);
         try

@@ -18,7 +18,7 @@ public class LoginUserUseCaseTests
         _loggerMock = new Mock<ILogger<LoginUserUseCase>>();
 
         _tokenServiceMock
-          .Setup(x => x.GenerateToken(It.IsAny<User>()))
+          .Setup(x => x.GenerateToken(It.IsAny<Users>()))
           .Returns("fake-jwt-token");
 
         _useCase = new LoginUserUseCase(
@@ -39,7 +39,7 @@ public class LoginUserUseCaseTests
         Assert.Equal("fake-jwt-token", token);
 
         _tokenServiceMock.Verify(x =>
-           x.GenerateToken(It.Is<User>(
+           x.GenerateToken(It.Is<Users>(
                u => u.Role == UserRole.Admin)),
            Times.Once);
 
@@ -58,7 +58,7 @@ public class LoginUserUseCaseTests
         Assert.Equal("fake-jwt-token", token);
 
         _tokenServiceMock.Verify(x =>
-            x.GenerateToken(It.Is<User>(
+            x.GenerateToken(It.Is<Users>(
                 u => u.Role == UserRole.User)),
             Times.Once);
 

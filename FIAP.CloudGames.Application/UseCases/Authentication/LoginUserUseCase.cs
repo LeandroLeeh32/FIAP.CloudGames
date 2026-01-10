@@ -1,12 +1,6 @@
 ﻿using FIAP.CloudGames.Application.Interfaces;
-using FIAP.CloudGames.Domain.Entities;
 using FIAP.CloudGames.Domain.Enums;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace FIAP.CloudGames.Application.UseCases.Authentication
 {
@@ -35,7 +29,7 @@ namespace FIAP.CloudGames.Application.UseCases.Authentication
 
             _logger.LogInformation("[App][LoginUserUseCase] Perfil atribuído ao usuário: {Perfil}",role);
 
-            var user = new User("Mock User", email, role);
+            var user = new FIAP.CloudGames.Domain.Entities.Users("Mock User", email, role);
 
             return _authService.GenerateToken(user);
 
