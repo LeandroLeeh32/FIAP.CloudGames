@@ -1,5 +1,5 @@
 ﻿using FIAP.CloudGames.API.Controllers.DTOs.Requests.Users;
-using FIAP.CloudGames.Application.UseCases.User;
+using FIAP.CloudGames.Application.UseCases.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,45 +12,52 @@ public class UsersController : ControllerBase
     private readonly GetUsersUseCase _get;
     private readonly UpdateUserUseCase _update;
     private readonly DeleteUserUseCase _delete;
+    private readonly GetUserByIdUseCase _getById;
 
-    public UsersController(
-        CreateUserUseCase create,
-        GetUsersUseCase get,
-        UpdateUserUseCase update,
-        DeleteUserUseCase delete)
+    public UsersController(CreateUserUseCase create,GetUsersUseCase get,UpdateUserUseCase update,DeleteUserUseCase delete, GetUserByIdUseCase getById)
     {
         _create = create;
         _get = get;
         _update = update;
         _delete = delete;
+        _getById = getById;
     }
 
     [HttpPost]
-    public IActionResult Create(CreateUserRequest request)
+    public async Task<IActionResult> Create([FromBody] CreateUserRequest request)
     {
-        var id = _create.Execute(
-            request.Name,
-            request.Email,
-            request.Role);
-
-        return CreatedAtAction(nameof(GetAll), new { id }, null);
-    }
-
-    [HttpGet]
-    public IActionResult GetAll()
-        => Ok(_get.Execute());
-
-    [HttpPut("{id}")]
-    public IActionResult Update(Guid id, UpdateUserRequest request)
-    {
-        _update.Execute(id, request.Name, request.Email, request.Role);
-        return NoContent();
+        var id = await _create.ExecuteAsync(request.Name,request.Email,request.Role);
+        return CreatedAtAction(nameof(GetAll),new { id },null);
     }
 
     [HttpDelete("{id}")]
-    public IActionResult Delete(Guid id)
+    public async Task<IActionResult> Delete(Guid id)
     {
-        _delete.Execute(id);
+        await _delete.ExecuteAsync(id);
         return NoContent();
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var users = await _get.ExecuteAsync();
+        return Ok(users);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(Guid id)
+    {
+        var user = await _getById.ExecuteAsync(id);
+        return Ok(user);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(Guid id,[FromBody] UpdateUserRequest request)
+    {
+        await _update.ExecuteAsync(id,request.Name,request.Email,request.Role);
+        return NoContent();
+    }
+
+
+
 }

@@ -9,12 +9,9 @@ namespace FIAP.CloudGames.Domain.Entities
         public string Email { get; private set; } = string.Empty;
         public UserRole Role { get; private set; }
 
-        // NÃO persistir senha no Domain agora
-        // Será tratada no futuro (Identity, Auth, etc.)
-
         protected User() { } // EF Core
 
-        public User(string name, string email, UserRole role)
+        private User(string name, string email, UserRole role)
         {
             Validate(name, email);
 
@@ -22,6 +19,12 @@ namespace FIAP.CloudGames.Domain.Entities
             Name = name;
             Email = email;
             Role = role;
+        }
+
+   
+        public static User Create(string name, string email, UserRole role)
+        {
+            return new User(name, email, role);
         }
 
         public void Update(string name, string email, UserRole role)
@@ -36,10 +39,10 @@ namespace FIAP.CloudGames.Domain.Entities
         private static void Validate(string name, string email)
         {
             if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Nome inválido");
+                throw new ArgumentException("[Domain][User] Nome inválido");
 
             if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
-                throw new ArgumentException("E-mail inválido");
+                throw new ArgumentException("[Domain][User] E-mail inválido");
         }
 
         public ICollection<UserGame> UserGames { get; private set; }

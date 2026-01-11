@@ -1,11 +1,11 @@
 ﻿using FIAP.CloudGames.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace FIAP.CloudGames.Infrastructure.Persistence
+namespace FIAP.CloudGames.Infrastructure.Persistence.Context
 {
-    public class ApplicationDbContext : DbContext
+    public class AppDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public AppDbContext(DbContextOptions<AppDbContext> options)
             : base(options)
         {
         }
@@ -18,8 +18,8 @@ namespace FIAP.CloudGames.Infrastructure.Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfigurationsFromAssembly(
-                typeof(ApplicationDbContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

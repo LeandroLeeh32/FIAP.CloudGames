@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace FIAP.CloudGames.Infrastructure.Persistence.Mappings
+namespace FIAP.CloudGames.Infrastructure.Persistence.Configurations
 {
     public class UserGameMap : IEntityTypeConfiguration<UserGame>
     {
