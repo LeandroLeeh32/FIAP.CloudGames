@@ -20,13 +20,19 @@ namespace FIAP.CloudGames.Application.UseCases.Games
                 return GameResult<GameDto>.Fail(validation.Error, validation.Message ?? "Invalid data.");
             }
 
-            var game = new Game
-            {
-                Id = Guid.NewGuid(),
-                Title = input.Title.Trim(),
-                Description = input.Description,
-                Price = input.Price
-            };
+            var game = new Game(
+                input.Title,
+                input.Price,
+                input.Description
+            );
+
+            //var game = new Game
+            //{
+            //    Id = Guid.NewGuid(),
+            //    Title = input.Title.Trim(),
+            //    Description = input.Description,
+            //    Price = input.Price
+            //};
 
             await _gameRepository.AddAsync(game);
             await _gameRepository.SaveChangesAsync();
