@@ -2,7 +2,7 @@
 using FIAP.CloudGames.Domain.Enums;
 using Microsoft.Extensions.Logging;
 
-namespace FIAP.CloudGames.Application.UseCases.User;
+namespace FIAP.CloudGames.Application.UseCases.Users;
 public class UpdateUserUseCase
 {
     private readonly IUserRepository _repository;
@@ -14,28 +14,20 @@ public class UpdateUserUseCase
         _logger = logger;
     }
 
-    public void Execute(Guid id, string name, string email, UserRole role)
+    public async Task ExecuteAsync(Guid id,string name,string email,UserRole role)
     {
-        _logger.LogInformation(
-            "[App][UpdateUserUseCase] Iniciando atualização do usuário {UserId}",
-            id);
+        var user = await _repository.GetByIdAsync(id);
 
-        var user = _repository.GetById(id);
-
-        if (user == null)
+        if (user is null)
         {
-            _logger.LogWarning(
-                "[App][UpdateUserUseCase] Usuário não encontrado: {UserId}",
-                id);
-
-            throw new Exception("Usuário não encontrado");
+            _logger.LogWarning("[App][UpdateUserUseCase] Usuário {UserId} não encontrado", id);
+            throw new Exception("[App][UpdateUserUseCase] Usuário não encontrado");
         }
 
         user.Update(name, email, role);
-        _repository.Update(user);
 
-        _logger.LogInformation(
-            "[App][UpdateUserUseCase] Usuário atualizado com sucesso: {UserId}",
-            id);
+        await _repository.UpdateAsync(user);
+
+        _logger.LogInformation("[App][UpdateUserUseCase] Usuário {UserId} atualizado com sucesso", id);
     }
 }

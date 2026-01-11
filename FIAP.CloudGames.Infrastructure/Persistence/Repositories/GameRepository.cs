@@ -1,15 +1,15 @@
 using FIAP.CloudGames.Application.Repositories;
 using FIAP.CloudGames.Domain.Entities;
-using FIAP.CloudGames.Infrastructure.Persistence;
+using FIAP.CloudGames.Infrastructure.Persistence.Context;
 using Microsoft.EntityFrameworkCore;
 
-namespace FIAP.CloudGames.Infrastructure.Repositories
+namespace FIAP.CloudGames.Infrastructure.Persistence.Repositories
 {
     public class GameRepository : IGameRepository
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly AppDbContext _dbContext;
 
-        public GameRepository(ApplicationDbContext dbContext)
+        public GameRepository(AppDbContext dbContext)
         {
             _dbContext = dbContext;
         }

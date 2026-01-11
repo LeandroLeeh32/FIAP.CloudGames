@@ -5,9 +5,9 @@ using FIAP.CloudGames.Application.Interfaces.Services;
 using FIAP.CloudGames.Application.Repositories;
 using FIAP.CloudGames.Application.UseCases.Authentication;
 using FIAP.CloudGames.Application.UseCases.Games;
-using FIAP.CloudGames.Application.UseCases.User;
-using FIAP.CloudGames.Infrastructure.Persistence;
-using FIAP.CloudGames.Infrastructure.Repositories;
+using FIAP.CloudGames.Application.UseCases.Users;
+using FIAP.CloudGames.Infrastructure.Persistence.Context;
+using FIAP.CloudGames.Infrastructure.Persistence.Repositories;
 using FIAP.CloudGames.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
@@ -20,8 +20,10 @@ builder.Host.UseNLog();
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
     ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
-builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlite(connectionString));
+var dbPath = Path.Combine(builder.Environment.ContentRootPath,"fiap.cloudgames.db");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite($"Data Source={dbPath}"));
+
+Console.WriteLine($"[DB] ConnectionString: {connectionString}");
 
 // UseCases
 builder.Services.AddScoped<LoginUserUseCase>();
@@ -29,6 +31,7 @@ builder.Services.AddScoped<CreateUserUseCase>();
 builder.Services.AddScoped<GetUsersUseCase>();
 builder.Services.AddScoped<UpdateUserUseCase>();
 builder.Services.AddScoped<DeleteUserUseCase>();
+builder.Services.AddScoped<GetUserByIdUseCase>();
 builder.Services.AddScoped<GetGamesUseCase>();
 builder.Services.AddScoped<GetGameByIdUseCase>();
 builder.Services.AddScoped<CreateGameUseCase>();

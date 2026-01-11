@@ -4,10 +4,11 @@ namespace FIAP.CloudGames.Application.Interfaces.Repositories
 {
     public interface IUserRepository
     {
-        void Add(User user);
-        User? GetById(Guid id);
-        IEnumerable<User> GetAll();
-        void Update(User user);
-        void Delete(Guid id);
+        Task AddAsync(User user);
+        Task<IEnumerable<User>> GetAllAsync();
+        Task DeleteAsync(User user);
+        Task<User?> GetByIdAsync(Guid id);
+        Task<User?> GetByEmailAsync(string email);
+        Task UpdateAsync(User user);
     }
 }
