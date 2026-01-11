@@ -1,0 +1,31 @@
+﻿using FIAP.CloudGames.Application.Interfaces.Repositories;
+using FIAP.CloudGames.Domain.Entities;
+using Microsoft.Extensions.Logging;
+
+namespace FIAP.CloudGames.Application.UseCases.Users;
+
+public class GetUsersUseCase
+{
+    private readonly IUserRepository _repository;
+    private readonly ILogger<GetUsersUseCase> _logger;
+
+    public GetUsersUseCase(
+        IUserRepository repository,
+        ILogger<GetUsersUseCase> logger)
+    {
+        _repository = repository;
+        _logger = logger;
+    }
+
+    public async Task<IEnumerable<User>> ExecuteAsync()
+    {
+        _logger.LogInformation("[App][GetUsersUseCase] Buscando lista de usuários");
+
+        var users = await _repository.GetAllAsync();
+
+        _logger.LogInformation("[App][GetUsersUseCase] Consulta de usuários finalizada. Total: {Total}",
+            users.Count());
+
+        return users;
+    }
+}
