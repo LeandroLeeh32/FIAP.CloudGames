@@ -19,6 +19,10 @@ public class UserMap : IEntityTypeConfiguration<User>
                .IsRequired()
                .HasMaxLength(150);
 
+        builder.Property(x => x.PasswordHash) 
+               .IsRequired()
+               .HasMaxLength(256);
+
         builder.Property(x => x.Role)
                .IsRequired();
     }
