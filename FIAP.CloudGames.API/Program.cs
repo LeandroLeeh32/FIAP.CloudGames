@@ -1,6 +1,7 @@
 
 using FIAP.CloudGames.API.Middlewares;
 using FIAP.CloudGames.Application.Interfaces.Repositories;
+using FIAP.CloudGames.Application.Interfaces.Security;
 using FIAP.CloudGames.Application.Interfaces.Services;
 using FIAP.CloudGames.Application.Repositories;
 using FIAP.CloudGames.Application.UseCases.Authentication;
@@ -42,6 +43,7 @@ builder.Services.AddScoped<DeleteGameUseCase>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 builder.Services.AddScoped<IGameRepository, GameRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 
 // 🔹 Controllers & Swagger
 builder.Services.AddControllers();

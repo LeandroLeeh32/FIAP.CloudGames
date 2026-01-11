@@ -1,4 +1,5 @@
-﻿using FIAP.CloudGames.Application.UseCases.Authentication;
+﻿using FIAP.CloudGames.API.Controllers.DTOs.Requests.Auth;
+using FIAP.CloudGames.Application.UseCases.Authentication;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FIAP.CloudGames.API.Controllers
@@ -15,9 +16,13 @@ namespace FIAP.CloudGames.API.Controllers
         }
 
         [HttpPost("login")]
-        public IActionResult Login([FromBody] string email)
+        public async Task<IActionResult> Login(
+            [FromBody] LoginRequest request)
         {
-            var token = _useCase.Execute(email);
+            var token = await _useCase.ExecuteAsync(
+                request.Email,
+                request.Password);
+
             return Ok(new { token });
         }
     }
