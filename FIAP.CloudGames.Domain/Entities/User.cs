@@ -4,21 +4,19 @@ namespace FIAP.CloudGames.Domain.Entities
 {
     public class User
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string PasswordHash { get; set; } = string.Empty;
-        public UserRole Role { get; set; } = UserRole.User;
+        public Guid Id { get; private set; }
+        public string Name { get; private set; } = string.Empty;
+        public string Email { get; private set; } = string.Empty;
+        public UserRole Role { get; private set; }
 
+        // NÃO persistir senha no Domain agora
+        // Será tratada no futuro (Identity, Auth, etc.)
 
-        // MOCK: senha não persistida ainda
+        protected User() { } // EF Core
+
         public User(string name, string email, UserRole role)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Nome inválido");
-
-            if (!email.Contains("@"))
-                throw new ArgumentException("E-mail inválido");
+            Validate(name, email);
 
             Id = Guid.NewGuid();
             Name = name;
@@ -28,18 +26,23 @@ namespace FIAP.CloudGames.Domain.Entities
 
         public void Update(string name, string email, UserRole role)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Nome inválido");
-
-            if (!email.Contains("@"))
-                throw new ArgumentException("E-mail inválido");
+            Validate(name, email);
 
             Name = name;
             Email = email;
             Role = role;
         }
 
-        public ICollection<UserGame> UserGames { get; set; } = new List<UserGame>();
+        private static void Validate(string name, string email)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Nome inválido");
 
+            if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
+                throw new ArgumentException("E-mail inválido");
+        }
+
+        public ICollection<UserGame> UserGames { get; private set; }
+            = new List<UserGame>();
     }
 }

@@ -25,9 +25,13 @@ namespace FIAP.CloudGames.Application.UseCases.Games
                 return GameResult<GameDto>.Fail(GameError.NotFound, "Game not found.");
             }
 
-            game.Title = input.Title.Trim();
-            game.Description = input.Description;
-            game.Price = input.Price;
+            //game.Title = input.Title.Trim();
+            //game.Description = input.Description;
+            //game.Price = input.Price;
+
+            game.UpdateTitle(input.Title);
+            game.UpdateDescription(input.Description);
+            game.UpdatePrice(input.Price);
 
             await _gameRepository.UpdateAsync(game);
             await _gameRepository.SaveChangesAsync();

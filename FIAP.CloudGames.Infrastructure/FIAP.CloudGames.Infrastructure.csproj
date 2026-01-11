@@ -7,7 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Persistence\Configurations\" />
     <Folder Include="Persistence\Migrations\" />
   </ItemGroup>
 
@@ -22,7 +21,6 @@
     <ProjectReference Include="..\FIAP.CloudGames.Application\FIAP.CloudGames.Application.csproj" />
     <ProjectReference Include="..\FIAP.CloudGames.Domain\FIAP.CloudGames.Domain.csproj" />
     <Folder Include="Security\" />
-    <Folder Include="Persistence\Configurations\" />
   </ItemGroup>
 
   <ItemGroup>
