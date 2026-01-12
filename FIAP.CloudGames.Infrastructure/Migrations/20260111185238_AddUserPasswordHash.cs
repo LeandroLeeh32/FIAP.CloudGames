@@ -17,11 +17,28 @@ namespace FIAP.CloudGames.Infrastructure.Migrations
                 maxLength: 256,
                 nullable: false,
                 defaultValue: "");
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "Name", "Email", "Role", "PasswordHash" },
+                values: new object[]
+                {
+                    new Guid("9f3c2e47-6d4b-4a91-b1f1-8e6c7a2c5d34"),
+                    "admin",
+                    "admin@admin",
+                    2,
+                    "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                });
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DeleteData(
+                table: "Users",
+                keyColumn: "Id",
+                keyValue: new Guid("9f3c2e47-6d4b-4a91-b1f1-8e6c7a2c5d34"));
+
             migrationBuilder.DropColumn(
                 name: "PasswordHash",
                 table: "Users");

@@ -17,16 +17,19 @@ public class GetUserByIdUseCase
         _logger = logger;
     }
 
-    public async Task<User> ExecuteAsync(Guid id)
+    public async Task<User?> ExecuteAsync(Guid id)
     {
-        _logger.LogInformation("[App][GetUserByIdUseCase] Buscando usuário por Id {UserId}", id);
+        _logger.LogInformation(
+            "[App][GetUserByIdUseCase] Fetching user by id {UserId}",
+            id);
 
         var user = await _repository.GetByIdAsync(id);
 
         if (user is null)
         {
-            _logger.LogWarning("[App][GetUserByIdUseCase] Usuário {UserId} não encontrado", id);
-            throw new Exception("[App][GetUserByIdUseCase] Usuário não encontrado");
+            _logger.LogWarning(
+                "[App][GetUserByIdUseCase] User {UserId} not found",
+                id);
         }
 
         return user;

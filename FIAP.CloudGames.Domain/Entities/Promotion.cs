@@ -1,4 +1,4 @@
-namespace FIAP.CloudGames.Domain.Entities
+ï»¿namespace FIAP.CloudGames.Domain.Entities
 {
     public class Promotion
     {
@@ -19,22 +19,53 @@ namespace FIAP.CloudGames.Domain.Entities
             DateTime endsAt,
             string? description = null)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException("Nome inválido");
-
-            if (discountPercentage <= 0 || discountPercentage > 100)
-                throw new ArgumentException("Desconto inválido");
-
-            if (endsAt <= startsAt)
-                throw new ArgumentException("Período inválido");
+            Validate(name, discountPercentage, startsAt, endsAt);
 
             Id = Guid.NewGuid();
-            Name = name;
+            Name = name.Trim();
             DiscountPercentage = discountPercentage;
             StartsAt = startsAt;
             EndsAt = endsAt;
-            Description = description;
+            Description = string.IsNullOrWhiteSpace(description)
+                ? null
+                : description.Trim();
             IsActive = true;
+        }
+
+        public void Update(
+            string name,
+            decimal discountPercentage,
+            DateTime startsAt,
+            DateTime endsAt,
+            string? description,
+            bool isActive)
+        {
+            Validate(name, discountPercentage, startsAt, endsAt);
+
+            Name = name.Trim();
+            DiscountPercentage = discountPercentage;
+            StartsAt = startsAt;
+            EndsAt = endsAt;
+            Description = string.IsNullOrWhiteSpace(description)
+                ? null
+                : description.Trim();
+            IsActive = isActive;
+        }
+
+        private static void Validate(
+            string name,
+            decimal discountPercentage,
+            DateTime startsAt,
+            DateTime endsAt)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException("Nome invalido");
+
+            if (discountPercentage <= 0 || discountPercentage > 100)
+                throw new ArgumentException("Desconto invalido");
+
+            if (endsAt <= startsAt)
+                throw new ArgumentException("Periodo invalido");
         }
 
         public ICollection<PromotionGame> PromotionGames { get; private set; }

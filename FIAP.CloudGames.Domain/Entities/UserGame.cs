@@ -21,5 +21,18 @@
             GameId = game.Id;
             PurchasedAt = DateTime.UtcNow;
         }
+
+        public UserGame(Guid userId, Guid gameId)
+        {
+            if (userId == Guid.Empty)
+                throw new ArgumentException("UserId is required.", nameof(userId));
+
+            if (gameId == Guid.Empty)
+                throw new ArgumentException("GameId is required.", nameof(gameId));
+
+            UserId = userId;
+            GameId = gameId;
+            PurchasedAt = DateTime.UtcNow;
+        }
     }
 }

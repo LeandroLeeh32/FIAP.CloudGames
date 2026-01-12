@@ -1,8 +1,8 @@
 ﻿using FIAP.CloudGames.Application.Interfaces.Repositories;
+using FIAP.CloudGames.Application.Interfaces.Security;
 using FIAP.CloudGames.Domain.Entities;
 using FIAP.CloudGames.Domain.Enums;
 using Microsoft.Extensions.Logging;
-using FIAP.CloudGames.Application.Interfaces.Security;
 
 namespace FIAP.CloudGames.Application.UseCases.Users;
 
@@ -22,33 +22,65 @@ public class CreateUserUseCase
         _logger = logger;
     }
 
-    public async Task<Guid> ExecuteAsync(string name,string email, string password, UserRole role)
+    public async Task<UserResult<Guid>> ExecuteAsync(string name, string email, string password, UserRole role)
     {
         _logger.LogInformation(
-            "[App][CreateUserUseCase] Iniciando criação de usuário. Email: {Email}",
+            "[App][CreateUserUseCase] Starting user creation. Email: {Email}",
             email);
 
-        var existUser = await _repository.GetByEmailAsync(email);
+        var validation = ValidateInput(name, email, password);
+        if (!validation.Success)
+        {
+            _logger.LogWarning(
+                "[App][CreateUserUseCase] Validation failed for email {Email}",
+                email);
 
-        //if (existUser is not null)
-        //{
-        //    _logger.LogWarning(
-        //        "[App][CreateUserUseCase] Usuário já existente com email {Email}",
-        //        email);
+            return UserResult<Guid>.Fail(
+                validation.Error,
+                validation.Message ?? "Invalid data.");
+        }
 
-        //    throw new Exception("Usuário já existente");
-        //}
+        var existingUser = await _repository.GetByEmailAsync(email);
+        if (existingUser is not null)
+        {
+            _logger.LogWarning(
+                "[App][CreateUserUseCase] User already exists for email {Email}",
+                email);
+
+            return UserResult<Guid>.Fail(
+                UserError.Conflict,
+                "User already exists.");
+        }
 
         var passwordHash = _passwordHashService.Hash(password);
-
         var user = User.Create(name, email, passwordHash, role);
 
         await _repository.AddAsync(user);
 
         _logger.LogInformation(
-            "[App][CreateUserUseCase] Usuário criado com sucesso. Id: {UserId}",
+            "[App][CreateUserUseCase] User created successfully. Id: {UserId}",
             user.Id);
 
-        return user.Id;
+        return UserResult<Guid>.Ok(user.Id);
+    }
+
+    private static UserResult ValidateInput(string name, string email, string password)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return UserResult.Fail(UserError.Validation, "Name is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
+        {
+            return UserResult.Fail(UserError.Validation, "Email is invalid.");
+        }
+
+        if (string.IsNullOrWhiteSpace(password))
+        {
+            return UserResult.Fail(UserError.Validation, "Password is required.");
+        }
+
+        return UserResult.Ok();
     }
 }

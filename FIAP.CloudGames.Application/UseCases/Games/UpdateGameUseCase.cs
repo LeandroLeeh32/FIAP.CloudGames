@@ -1,33 +1,46 @@
-using FIAP.CloudGames.Application.Repositories;
+﻿using FIAP.CloudGames.Application.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace FIAP.CloudGames.Application.UseCases.Games
 {
     public class UpdateGameUseCase
     {
         private readonly IGameRepository _gameRepository;
+        private readonly ILogger<UpdateGameUseCase> _logger;
 
-        public UpdateGameUseCase(IGameRepository gameRepository)
+        public UpdateGameUseCase(
+            IGameRepository gameRepository,
+            ILogger<UpdateGameUseCase> logger)
         {
             _gameRepository = gameRepository;
+            _logger = logger;
         }
 
         public async Task<GameResult<GameDto>> ExecuteAsync(Guid id, UpdateGameInput input)
         {
+            _logger.LogInformation(
+                "[App][UpdateGameUseCase] Starting update for game {GameId}",
+                id);
+
             var validation = ValidateInput(input.Title, input.Price);
             if (!validation.Success)
             {
+                _logger.LogWarning(
+                    "[App][UpdateGameUseCase] Validation failed for game {GameId}",
+                    id);
+
                 return GameResult<GameDto>.Fail(validation.Error, validation.Message ?? "Invalid data.");
             }
 
             var game = await _gameRepository.GetByIdAsync(id);
             if (game is null)
             {
+                _logger.LogWarning(
+                    "[App][UpdateGameUseCase] Game {GameId} not found",
+                    id);
+
                 return GameResult<GameDto>.Fail(GameError.NotFound, "Game not found.");
             }
-
-            //game.Title = input.Title.Trim();
-            //game.Description = input.Description;
-            //game.Price = input.Price;
 
             game.UpdateTitle(input.Title);
             game.UpdateDescription(input.Description);
@@ -35,6 +48,10 @@ namespace FIAP.CloudGames.Application.UseCases.Games
 
             await _gameRepository.UpdateAsync(game);
             await _gameRepository.SaveChangesAsync();
+
+            _logger.LogInformation(
+                "[App][UpdateGameUseCase] Game {GameId} updated",
+                id);
 
             return GameResult<GameDto>.Ok(ToDto(game));
         }
