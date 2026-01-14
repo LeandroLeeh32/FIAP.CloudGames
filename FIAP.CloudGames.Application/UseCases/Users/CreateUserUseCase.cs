@@ -3,6 +3,7 @@ using FIAP.CloudGames.Application.Interfaces.Security;
 using FIAP.CloudGames.Domain.Entities;
 using FIAP.CloudGames.Domain.Enums;
 using Microsoft.Extensions.Logging;
+using System.Net.Mail;
 
 namespace FIAP.CloudGames.Application.UseCases.Users;
 
@@ -71,7 +72,7 @@ public class CreateUserUseCase
             return UserResult.Fail(UserError.Validation, "Name is required.");
         }
 
-        if (string.IsNullOrWhiteSpace(email) || !email.Contains("@"))
+        if (!IsValidEmail(email))
         {
             return UserResult.Fail(UserError.Validation, "Email is invalid.");
         }
@@ -81,6 +82,66 @@ public class CreateUserUseCase
             return UserResult.Fail(UserError.Validation, "Password is required.");
         }
 
+        if (password.Length < 8)
+        {
+            return UserResult.Fail(UserError.Validation, "Password must be at least 8 characters.");
+        }
+
+        if (!HasRequiredPasswordChars(password))
+        {
+            return UserResult.Fail(
+                UserError.Validation,
+                "Password must contain at least one letter, one number, and one special character.");
+        }
+
         return UserResult.Ok();
+    }
+
+    private static bool IsValidEmail(string email)
+    {
+        if (string.IsNullOrWhiteSpace(email))
+        {
+            return false;
+        }
+
+        try
+        {
+            var address = new MailAddress(email);
+            return address.Address == email;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private static bool HasRequiredPasswordChars(string password)
+    {
+        var hasLetter = false;
+        var hasDigit = false;
+        var hasSpecial = false;
+
+        foreach (var ch in password)
+        {
+            if (char.IsLetter(ch))
+            {
+                hasLetter = true;
+            }
+            else if (char.IsDigit(ch))
+            {
+                hasDigit = true;
+            }
+            else if (!char.IsWhiteSpace(ch))
+            {
+                hasSpecial = true;
+            }
+
+            if (hasLetter && hasDigit && hasSpecial)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
