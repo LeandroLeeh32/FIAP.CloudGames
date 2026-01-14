@@ -43,6 +43,7 @@ namespace FIAP.CloudGames.API.Controllers
         /// List all promotions.
         /// </summary>
         [HttpGet]
+        [Authorize(Roles = "Admin,User")]
         [ProducesResponseType(typeof(IReadOnlyList<PromotionResponse>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
         [ProducesResponseType(StatusCodes.Status403Forbidden)]
@@ -57,6 +58,7 @@ namespace FIAP.CloudGames.API.Controllers
         /// Get a promotion by id.
         /// </summary>
         [HttpGet("{id:guid}")]
+        [Authorize(Roles = "Admin,User")]
         [ProducesResponseType(typeof(PromotionResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -76,6 +78,7 @@ namespace FIAP.CloudGames.API.Controllers
         /// Create a new promotion.
         /// </summary>
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(PromotionResponse), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -104,6 +107,7 @@ namespace FIAP.CloudGames.API.Controllers
         /// Update a promotion by id.
         /// </summary>
         [HttpPut("{id:guid}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(typeof(PromotionResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -138,6 +142,7 @@ namespace FIAP.CloudGames.API.Controllers
         /// Delete a promotion by id.
         /// </summary>
         [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status401Unauthorized)]
@@ -157,6 +162,7 @@ namespace FIAP.CloudGames.API.Controllers
         /// Add a game to a promotion.
         /// </summary>
         [HttpPost("{id:guid}/games")]
+        [Authorize(Roles = "Admin")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
