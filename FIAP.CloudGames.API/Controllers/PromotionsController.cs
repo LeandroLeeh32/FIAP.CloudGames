@@ -1,5 +1,6 @@
 ﻿using FIAP.CloudGames.API.Controllers.DTOs.Requests.Promotions;
 using FIAP.CloudGames.API.Controllers.DTOs.Responses.Promotions;
+using FIAP.CloudGames.Application.UseCases.PromotionGames;
 using FIAP.CloudGames.Application.UseCases.Promotions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -176,9 +177,9 @@ namespace FIAP.CloudGames.API.Controllers
             {
                 return result.Error switch
                 {
-                    PromotionError.NotFound => NotFound(result.Message),
-                    PromotionError.Conflict => Conflict(result.Message),
-                    PromotionError.Validation => BadRequest(result.Message),
+                    PromotionGameError.NotFound => NotFound(result.Message),
+                    PromotionGameError.Conflict => Conflict(result.Message),
+                    PromotionGameError.Validation => BadRequest(result.Message),
                     _ => BadRequest(result.Message)
                 };
             }

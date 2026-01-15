@@ -25,9 +25,9 @@ namespace FIAP.CloudGames.Infrastructure.Migrations
                 {
                     new Guid("9f3c2e47-6d4b-4a91-b1f1-8e6c7a2c5d34"),
                     "admin",
-                    "admin@admin",
+                    "admin@admin.com",
                     2,
-                    "pmWkWSBCL51Bfkhn79xPuKBKHz//H6B+mY6G9/eieuM="
+                    "GQJxJ6tF1YkTaRPTpIqswE6TnxeAYi4IXFls4AkgWgs="
                 });
         }
 

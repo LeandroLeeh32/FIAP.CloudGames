@@ -6,6 +6,7 @@ using FIAP.CloudGames.Application.Interfaces.Services;
 using FIAP.CloudGames.Application.Repositories;
 using FIAP.CloudGames.Application.UseCases.Authentication;
 using FIAP.CloudGames.Application.UseCases.Games;
+using FIAP.CloudGames.Application.UseCases.PromotionGames;
 using FIAP.CloudGames.Application.UseCases.Promotions;
 using FIAP.CloudGames.Application.UseCases.UserGames;
 using FIAP.CloudGames.Application.UseCases.Users;

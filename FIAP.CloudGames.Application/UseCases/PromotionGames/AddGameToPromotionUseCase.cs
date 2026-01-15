@@ -1,8 +1,8 @@
-﻿using FIAP.CloudGames.Application.Repositories;
+using FIAP.CloudGames.Application.Repositories;
 using FIAP.CloudGames.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
-namespace FIAP.CloudGames.Application.UseCases.Promotions
+namespace FIAP.CloudGames.Application.UseCases.PromotionGames
 {
     public class AddGameToPromotionUseCase
     {
@@ -20,7 +20,7 @@ namespace FIAP.CloudGames.Application.UseCases.Promotions
             _logger = logger;
         }
 
-        public async Task<PromotionResult> ExecuteAsync(Guid promotionId, Guid gameId)
+        public async Task<PromotionGameResult> ExecuteAsync(Guid promotionId, Guid gameId)
         {
             _logger.LogInformation(
                 "[App][AddGameToPromotionUseCase] Adding game {GameId} to promotion {PromotionId}",
@@ -34,8 +34,8 @@ namespace FIAP.CloudGames.Application.UseCases.Promotions
                     promotionId,
                     gameId);
 
-                return PromotionResult.Fail(
-                    PromotionError.Validation,
+                return PromotionGameResult.Fail(
+                    PromotionGameError.Validation,
                     "PromotionId and GameId are required.");
             }
 
@@ -46,8 +46,8 @@ namespace FIAP.CloudGames.Application.UseCases.Promotions
                     "[App][AddGameToPromotionUseCase] Promotion {PromotionId} not found",
                     promotionId);
 
-                return PromotionResult.Fail(
-                    PromotionError.NotFound,
+                return PromotionGameResult.Fail(
+                    PromotionGameError.NotFound,
                     "Promotion not found.");
             }
 
@@ -58,8 +58,8 @@ namespace FIAP.CloudGames.Application.UseCases.Promotions
                     "[App][AddGameToPromotionUseCase] Game {GameId} not found",
                     gameId);
 
-                return PromotionResult.Fail(
-                    PromotionError.NotFound,
+                return PromotionGameResult.Fail(
+                    PromotionGameError.NotFound,
                     "Game not found.");
             }
 
@@ -71,8 +71,8 @@ namespace FIAP.CloudGames.Application.UseCases.Promotions
                     promotionId,
                     gameId);
 
-                return PromotionResult.Fail(
-                    PromotionError.Conflict,
+                return PromotionGameResult.Fail(
+                    PromotionGameError.Conflict,
                     "Promotion already applied to this game.");
             }
 
@@ -84,7 +84,7 @@ namespace FIAP.CloudGames.Application.UseCases.Promotions
                 gameId,
                 promotionId);
 
-            return PromotionResult.Ok();
+            return PromotionGameResult.Ok();
         }
     }
 }
