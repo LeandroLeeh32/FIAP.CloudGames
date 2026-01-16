@@ -7,16 +7,13 @@ namespace FIAP.CloudGames.Application.UseCases.UserGames
     public class AddGameToUserUseCase
     {
         private readonly IUserRepository _userRepository;
-        private readonly IUserGameRepository _userGameRepository;
         private readonly IGameRepository _gameRepository;
 
         public AddGameToUserUseCase(
             IUserRepository userRepository,
-            IUserGameRepository userGameRepository,
             IGameRepository gameRepository)
         {
             _userRepository = userRepository;
-            _userGameRepository = userGameRepository;
             _gameRepository = gameRepository;
         }
 
@@ -45,7 +42,7 @@ namespace FIAP.CloudGames.Application.UseCases.UserGames
                     "Game not found.");
             }
 
-            var exists = await _userGameRepository.ExistsAsync(userId, gameId);
+            var exists = await _userRepository.ExistsGameAsync(userId, gameId);
             if (exists)
             {
                 return UserGameResult.Fail(
@@ -53,8 +50,8 @@ namespace FIAP.CloudGames.Application.UseCases.UserGames
                     "User already owns this game.");
             }
 
-            await _userGameRepository.AddAsync(new UserGame(user.Id, game.Id));
-            await _userGameRepository.SaveChangesAsync();
+            await _userRepository.AddGameAsync(new UserGame(user.Id, game.Id));
+            await _userRepository.SaveChangesAsync();
 
             return UserGameResult.Ok();
         }
