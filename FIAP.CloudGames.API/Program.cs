@@ -22,12 +22,13 @@ builder.Logging.ClearProviders();
 builder.Host.UseNLog();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")
-    ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+    ?? throw new InvalidOperationException(
+        "Connection string 'DefaultConnection' not found."
+    );
 
-var dbPath = Path.Combine(builder.Environment.ContentRootPath, "fiap.cloudgames.db");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlite($"Data Source={dbPath}"));
-
-Console.WriteLine($"[DB] ConnectionString: {connectionString}");
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(connectionString)
+);
 
 // UseCases
 builder.Services.AddScoped<LoginUserUseCase>();
