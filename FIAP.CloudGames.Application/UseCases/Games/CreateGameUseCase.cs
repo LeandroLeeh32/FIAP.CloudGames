@@ -1,22 +1,35 @@
-using FIAP.CloudGames.Domain.Entities;
+﻿using FIAP.CloudGames.Domain.Entities;
 using FIAP.CloudGames.Application.Repositories;
+using Microsoft.Extensions.Logging;
 
 namespace FIAP.CloudGames.Application.UseCases.Games
 {
     public class CreateGameUseCase
     {
         private readonly IGameRepository _gameRepository;
+        private readonly ILogger<CreateGameUseCase> _logger;
 
-        public CreateGameUseCase(IGameRepository gameRepository)
+        public CreateGameUseCase(
+            IGameRepository gameRepository,
+            ILogger<CreateGameUseCase> logger)
         {
             _gameRepository = gameRepository;
+            _logger = logger;
         }
 
         public async Task<GameResult<GameDto>> ExecuteAsync(CreateGameInput input)
         {
+            _logger.LogInformation(
+                "[App][CreateGameUseCase] Starting create for title {Title}",
+                input.Title);
+
             var validation = ValidateInput(input.Title, input.Price);
             if (!validation.Success)
             {
+                _logger.LogWarning(
+                    "[App][CreateGameUseCase] Validation failed for title {Title}",
+                    input.Title);
+
                 return GameResult<GameDto>.Fail(validation.Error, validation.Message ?? "Invalid data.");
             }
 
@@ -26,16 +39,12 @@ namespace FIAP.CloudGames.Application.UseCases.Games
                 input.Description
             );
 
-            //var game = new Game
-            //{
-            //    Id = Guid.NewGuid(),
-            //    Title = input.Title.Trim(),
-            //    Description = input.Description,
-            //    Price = input.Price
-            //};
-
             await _gameRepository.AddAsync(game);
             await _gameRepository.SaveChangesAsync();
+
+            _logger.LogInformation(
+                "[App][CreateGameUseCase] Game created with id {GameId}",
+                game.Id);
 
             return GameResult<GameDto>.Ok(ToDto(game));
         }

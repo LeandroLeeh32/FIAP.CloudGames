@@ -1,5 +1,4 @@
 ﻿using FIAP.CloudGames.Application.Interfaces.Repositories;
-using FIAP.CloudGames.Domain.Entities;
 using Microsoft.Extensions.Logging;
 
 namespace FIAP.CloudGames.Application.UseCases.Users;
@@ -17,19 +16,29 @@ public class DeleteUserUseCase
         _logger = logger;
     }
 
-    public async Task ExecuteAsync(Guid id)
+    public async Task<UserResult> ExecuteAsync(Guid id)
     {
-        _logger.LogInformation("[App][DeleteUserUseCase] Iniciando exclusão do usuário {UserId}", id);
+        _logger.LogInformation(
+            "[App][DeleteUserUseCase] Starting delete for user {UserId}",
+            id);
 
         var user = await _repository.GetByIdAsync(id);
 
         if (user is null)
         {
-            _logger.LogWarning("[App][DeleteUserUseCase] Usuário {UserId} não encontrado para exclusão", id);
-            throw new Exception("Usuário não encontrado");
+            _logger.LogWarning(
+                "[App][DeleteUserUseCase] User {UserId} not found",
+                id);
+
+            return UserResult.Fail(UserError.NotFound, "User not found.");
         }
 
         await _repository.DeleteAsync(user);
-        _logger.LogInformation("[App][DeleteUserUseCase] Usuário {UserId} removido com sucesso", id);
+
+        _logger.LogInformation(
+            "[App][DeleteUserUseCase] User {UserId} removed",
+            id);
+
+        return UserResult.Ok();
     }
 }
