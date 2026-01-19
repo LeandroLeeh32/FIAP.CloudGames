@@ -22,20 +22,18 @@ public class AddGameToUserUseCaseTests
         var gameRepository = new Mock<IGameRepository>();
         gameRepository.Setup(r => r.GetByIdAsync(game.Id)).ReturnsAsync(game);
 
-        var userGameRepository = new Mock<IUserGameRepository>();
-        userGameRepository.Setup(r => r.ExistsAsync(user.Id, game.Id)).ReturnsAsync(false);
-        userGameRepository.Setup(r => r.AddAsync(It.IsAny<UserGame>())).Returns(Task.CompletedTask);
-        userGameRepository.Setup(r => r.SaveChangesAsync()).Returns(Task.CompletedTask);
+        userRepository.Setup(r => r.ExistsGameAsync(user.Id, game.Id)).ReturnsAsync(false);
+        userRepository.Setup(r => r.AddGameAsync(It.IsAny<UserGame>())).Returns(Task.CompletedTask);
+        userRepository.Setup(r => r.SaveChangesAsync()).Returns(Task.CompletedTask);
 
         var sut = new AddGameToUserUseCase(
             userRepository.Object,
-            userGameRepository.Object,
             gameRepository.Object);
 
         var result = await sut.ExecuteAsync(user.Id, game.Id);
 
         Assert.True(result.Success);
-        userGameRepository.Verify(r => r.AddAsync(
+        userRepository.Verify(r => r.AddGameAsync(
             It.Is<UserGame>(ug => ug.UserId == user.Id && ug.GameId == game.Id)), Times.Once);
     }
 }
